@@ -1,0 +1,54 @@
+---
+interface Bullet { tipo: 'ok' | 'no'; texto: string }
+interface Props {
+  titulo: string;
+  pretitulo?: string;
+  bullets: Bullet[];
+  sbVersion: string;
+  linkAfiliado: string;
+}
+const { titulo, pretitulo = 'Antes de comprar', bullets, sbVersion, linkAfiliado } = Astro.props;
+---
+<aside class="sidebar">
+  <div class="sidebar-card">
+    <div class="sidebar-head">
+      <div class="sb-pretitle">{pretitulo}</div>
+      <div class="sb-title">{titulo}</div>
+      <ul class="sb-bullets">
+        {bullets.map(b => (
+          <li class={b.tipo}>
+            <span>{b.texto}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="sb-version" set:html={sbVersion} />
+
+    <div class="sb-cta">
+      <a
+        href={linkAfiliado}
+        target="_blank"
+        rel="nofollow sponsored"
+        class="btn-buy"
+      >
+        Ver na Amazon →
+      </a>
+      <a
+        href={linkAfiliado}
+        target="_blank"
+        rel="nofollow sponsored"
+        class="btn-alt"
+      >
+        Verificar disponibilidade
+      </a>
+    </div>
+
+    <div class="sb-disclaimer">
+      Preço e estoque verificados na Amazon. Pode haver variação.
+    </div>
+    <div class="sb-afiliado">
+      Link de afiliado — sem custo adicional para você.
+    </div>
+  </div>
+</aside>

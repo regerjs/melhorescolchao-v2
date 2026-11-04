@@ -1,0 +1,30 @@
+---
+---
+<div id="lgpd-banner" role="dialog" aria-label="Aviso de cookies e privacidade" aria-live="polite">
+  <p>
+    Usamos cookies para melhorar a experiência de navegação. Ao continuar, você concorda com nossa
+    <a href="/politica-de-privacidade">Política de Privacidade</a>.
+  </p>
+  <div class="lgpd-actions">
+    <button id="lgpd-accept">Aceitar cookies</button>
+    <button id="lgpd-reject">Somente essenciais</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const banner = document.getElementById('lgpd-banner') as HTMLElement;
+    let consent = '';
+    try { consent = localStorage.getItem('lgpd_consent') ?? ''; } catch {}
+    if (consent) { banner.style.display = 'none'; return; }
+
+    document.getElementById('lgpd-accept')!.addEventListener('click', () => {
+      try { localStorage.setItem('lgpd_consent', 'all'); } catch {}
+      banner.style.display = 'none';
+    });
+    document.getElementById('lgpd-reject')!.addEventListener('click', () => {
+      try { localStorage.setItem('lgpd_consent', 'essential'); } catch {}
+      banner.style.display = 'none';
+    });
+  })();
+</script>

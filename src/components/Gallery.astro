@@ -1,0 +1,48 @@
+---
+interface Imagem { src: string; alt: string }
+interface Props { imagens: Imagem[] }
+const { imagens } = Astro.props;
+const principal = imagens[0];
+---
+<div class="gallery">
+  <img
+    id="main-img"
+    class="main-img"
+    src={principal.src}
+    alt={principal.alt}
+    width="380"
+    height="380"
+    loading="eager"
+    decoding="async"
+  />
+  <div class="thumbs">
+    {imagens.map((img, i) => (
+      <img
+        class:list={['thumb', { active: i === 0 }]}
+        src={img.src}
+        alt={img.alt}
+        width="56"
+        height="56"
+        loading="lazy"
+        decoding="async"
+        data-src={img.src}
+        data-alt={img.alt}
+      />
+    ))}
+  </div>
+  <p class="img-credit">Imagem oficial do fabricante</p>
+</div>
+
+<script>
+  const mainImg = document.getElementById('main-img') as HTMLImageElement;
+  const thumbs = document.querySelectorAll<HTMLImageElement>('.thumb');
+
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      thumbs.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+      mainImg.src = thumb.dataset.src!;
+      mainImg.alt = thumb.dataset.alt!;
+    });
+  });
+</script>

@@ -1,0 +1,166 @@
+---
+import Base from '../layouts/Base.astro';
+import Gallery from '../components/Gallery.astro';
+import Sidebar from '../components/Sidebar.astro';
+import LgpdBanner from '../components/LgpdBanner.astro';
+import { sofaChesterfield as p } from '../data/produto';
+---
+<Base
+  titulo="Sofá Chesterfield Gran Belo Couro Capucino — Análise e Compra | melhorescolchao.com.br"
+  descricao="Análise completa do Sofá Chesterfield Gran Belo 235cm Couro Capucino. Veja especificações, prós, contras e compre na Amazon com segurança."
+>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="/" class="logo">melhores<span>colchao</span>.com.br</a>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Navegação">
+    {p.breadcrumb.map((item, i) => (
+      <>
+        <a href={item.href}>{item.label}</a>
+        {i < p.breadcrumb.length - 1 && ' › '}
+      </>
+    ))}
+    {' › '}Gran Belo 235cm Couro Capucino
+  </nav>
+
+  <!-- Page grid -->
+  <div class="page">
+    <!-- LEFT: Gallery -->
+    <Gallery imagens={p.imagens} />
+
+    <!-- CENTER: Product info -->
+    <main class="info">
+      <h1 class="product-title">{p.titulo}</h1>
+
+      <div class="stars-row">
+        <span class="stars">{'★'.repeat(Math.floor(p.estrelas))}</span>
+        <span class="stars-count">{p.avaliacoesTexto}</span>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="price-block">
+        <div class="price-label">Preço na Amazon</div>
+        <div class="price-main"><sup>R$</sup> {p.preco}</div>
+        <div class="price-note">Verificado na Amazon. Sujeito a alteração.</div>
+      </div>
+
+      <!-- Version selector -->
+      <div class="version-label">Cor: <strong>Capucino / Avelã</strong></div>
+      <div class="versions">
+        {p.versoes.map((v, i) => (
+          <div class:list={['ver-btn', { active: i === 0 }]}>
+            <div>
+              <div class="ver-name">
+                {v.nome}
+                {v.indicada && <span class="tag-ind">Indicada</span>}
+              </div>
+              <div class="ver-desc">{v.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Sobre este produto -->
+      <p class="about-title">Sobre este produto</p>
+      <ul class="about-list">
+        {p.sobre.map(item => (
+          <li><strong>{item.label}:</strong> {item.valor}</li>
+        ))}
+      </ul>
+
+      <!-- Comparison table -->
+      <p class="compare-h">{p.comparacao.titulo}</p>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="hl">{p.comparacao.colunas[0]}</th>
+              <th>{p.comparacao.colunas[1]}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {p.comparacao.linhas.map(linha => (
+              <tr>
+                <td>{linha.criterio}</td>
+                <td class="hl">{linha.destaque}</td>
+                <td>{linha.outro}</td>
+              </tr>
+            ))}
+            <tr>
+              <td>Comprar</td>
+              <td class="hl">
+                <a href={p.linkAfiliado} target="_blank" rel="nofollow sponsored">
+                  Ver na Amazon →
+                </a>
+              </td>
+              <td>Buscar na Amazon</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Full review -->
+      <div class="review">
+        <h2>{p.review.titulo}</h2>
+
+        {p.review.secoes.map(s => (
+          <>
+            <h3>{s.subtitulo}</h3>
+            <p>{s.texto}</p>
+          </>
+        ))}
+
+        <div class="pros-cons">
+          <div class="pc pros">
+            <h4>Pontos positivos</h4>
+            <ul>{p.review.pros.map(item => <li>{item}</li>)}</ul>
+          </div>
+          <div class="pc cons">
+            <h4>Pontos negativos</h4>
+            <ul>{p.review.cons.map(item => <li>{item}</li>)}</ul>
+          </div>
+        </div>
+
+        <h3>Especificações técnicas</h3>
+        <div class="specs-wrap">
+          <table class="specs-table">
+            <tbody>
+              {p.specs.map(s => (
+                <tr><td>{s.label}</td><td>{s.valor}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT: Sidebar -->
+    <Sidebar
+      titulo={p.tituloSidebar}
+      bullets={p.sidebullets}
+      sbVersion={p.sbVersion}
+      linkAfiliado={p.linkAfiliado}
+    />
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>
+      melhorescolchao.com.br é participante do Programa de Associados da Amazon Brasil,
+      um programa de publicidade afiliada que permite que sites ganhem comissões ao recomendar
+      produtos da Amazon.com.br.
+    </p>
+    <p>Os preços e disponibilidade estão sujeitos a alteração. As informações exibidas na Amazon no momento da compra serão aplicadas.</p>
+    <p>
+      <a href="/politica-de-privacidade">Política de Privacidade</a> ·
+      <a href="/termos-de-uso">Termos de Uso</a>
+    </p>
+  </footer>
+
+  <!-- LGPD Banner -->
+  <LgpdBanner />
+</Base>

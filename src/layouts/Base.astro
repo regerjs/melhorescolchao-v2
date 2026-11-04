@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  titulo: string;
+  descricao?: string;
+  canonical?: string;
+}
+const { titulo, descricao = 'Análise completa e guia de compra.', canonical } = Astro.props;
+const url = canonical ?? Astro.url.href;
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{titulo}</title>
+  <meta name="description" content={descricao} />
+  <link rel="canonical" href={url} />
+  <meta property="og:title" content={titulo} />
+  <meta property="og:description" content={descricao} />
+  <meta property="og:url" content={url} />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+  <slot />
+</body>
+</html>
